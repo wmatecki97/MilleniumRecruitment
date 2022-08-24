@@ -21,19 +21,19 @@ namespace MilleniumRecruitment.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public ActionResult<Animal> Get(int id)
+        [HttpGet("{id}.{format}"), FormatFilter]
+        public async Task<ActionResult<Animal>> GetAsync(int id)
         {
-            return Ok(repository.GetAsync(id));
+            return Ok(await repository.GetAsync(id));
         }
 
-        [HttpGet()]
+        [HttpGet("{format}"), FormatFilter]
         public ActionResult<Animal> GetAll()
         {
             return Ok(repository.GetAll());
         }
 
-        [HttpPost()]
+        [HttpPost("{format}"), FormatFilter]
         public async Task<ActionResult<Animal>> PostAsync([FromBody] Animal animal)
         {
             if (!ModelState.IsValid)
@@ -44,7 +44,7 @@ namespace MilleniumRecruitment.Controllers
             return await repository.AddAsync(animal);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}.{format}"), FormatFilter]
         public async Task<ActionResult<Animal>> Delete(int id)
         {
             return await repository.DeleteAsync(id);
