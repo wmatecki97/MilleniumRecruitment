@@ -4,14 +4,21 @@ namespace MilleniumRecruitment.Repositories
 {
     public class AnimalsRepository
     {
-        public Animal[] GetAll()
-        {
+        private readonly ZooDbContext dbContext;
 
+        public AnimalsRepository(ZooDbContext dbContext)
+        {
+            dbContext = dbContext;
         }
 
-        public Animal Get()
+        public Animal[] GetAll()
         {
+            return dbContext.Animals.ToArray();
+        }
 
+        public Animal Get(int id)
+        {
+            return dbContext.Animals.FirstOrDefault(a => a.Id == id);
         }
     }
 }
