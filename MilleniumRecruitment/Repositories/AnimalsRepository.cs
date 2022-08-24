@@ -7,10 +7,12 @@ namespace MilleniumRecruitment.Repositories
     public class AnimalRepository : IAnimalRepository
     {
         private readonly ZooDbContext dbContext;
+        private readonly ILogger<AnimalRepository> logger;
 
-        public AnimalRepository(ZooDbContext dbContext)
+        public AnimalRepository(ZooDbContext dbContext, ILogger<AnimalRepository> logger)
         {
             this.dbContext = dbContext;
+            this.logger = logger;
         }
 
         public Animal[] GetAll()
@@ -32,10 +34,17 @@ namespace MilleniumRecruitment.Repositories
 
         public async Task<Animal> UpdateAsync(Animal animal)
         {
+            if (dbContext.Animals.All(a => a.Id != animal.Id))
+            {
+                logger.LogWarning($"Trying to update not existing Animal entry with id {animal.Id}");
+                throw new Exception("The given entry does not exist");
+            }
+
             dbContext.Animals.Attach(animal);
             dbContext.Entry(animal).Property(a => a.Name).IsModified = true;
-            
+
             await dbContext.SaveChangesAsync();
+
             return animal;
         }
 

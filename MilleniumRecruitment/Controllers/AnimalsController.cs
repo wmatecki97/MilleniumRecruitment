@@ -9,13 +9,10 @@ namespace MilleniumRecruitment.Controllers
     [ApiController]
     public class AnimalController : ControllerBase
     {
-
-        private readonly ILogger<AnimalController> _logger;
         private readonly IAnimalRepository repository;
 
-        public AnimalController(ILogger<AnimalController> logger, IAnimalRepository repository)
+        public AnimalController(IAnimalRepository repository)
         {
-            _logger = logger;
             this.repository = repository;
         }
 
