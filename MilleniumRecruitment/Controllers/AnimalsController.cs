@@ -65,9 +65,15 @@ namespace MilleniumRecruitment.Controllers
         }
 
         [HttpDelete("{id}.{format}"), FormatFilter]
-        public async Task<ActionResult<Animal>> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return await repository.DeleteAsync(id);
+            var IsSuccess = await repository.TryDeleteAsync(id);
+            if (!IsSuccess)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
         }
     }
 }

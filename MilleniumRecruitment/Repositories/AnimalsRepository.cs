@@ -48,13 +48,17 @@ namespace MilleniumRecruitment.Repositories
             return animal;
         }
 
-        public async Task<Animal> DeleteAsync(int id)
+        public async Task<bool> TryDeleteAsync(int id)
         {
-            //todo check
+            if (dbContext.Animals.All(a => a.Id != id))
+            {
+                return false;
+            }
+
             var instance = await dbContext.Animals.FindAsync(id);
             dbContext.Remove(instance);
             await dbContext.SaveChangesAsync();
-            return instance;
+            return true;
         }
     }
 }

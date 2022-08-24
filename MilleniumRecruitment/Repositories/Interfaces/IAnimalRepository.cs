@@ -6,7 +6,7 @@ namespace MilleniumRecruitment.Repositories.Interfaces
     {
         Task<Animal> AddAsync(Animal animal);
         Task<Animal> UpdateAsync(Animal animal);
-        Task<Animal> DeleteAsync(int id);
+        Task<bool> TryDeleteAsync(int id);
         Animal[] GetAll();
         Task<Animal> GetAsync(int id);
     }
