@@ -1,4 +1,5 @@
-﻿using MilleniumRecruitment.Animals;
+﻿using Microsoft.EntityFrameworkCore;
+using MilleniumRecruitment.Animals;
 
 namespace MilleniumRecruitment.Repositories
 {
@@ -13,12 +14,27 @@ namespace MilleniumRecruitment.Repositories
 
         public Animal[] GetAll()
         {
-            return dbContext.Animals.ToArray();
+            return dbContext.Animals.AsNoTracking().ToArray();
         }
 
-        public Animal Get(int id)
+        public async Task<Animal> GetAsync(int id)
         {
-            return dbContext.Animals.FirstOrDefault(a => a.Id == id);
+            return await dbContext.Animals.FindAsync(id);
+        }
+
+        public async Task<Animal> AddAsync(Animal animal)
+        {
+            dbContext.Animals.Add(animal);
+            await dbContext.SaveChangesAsync();
+            return animal;
+        }
+
+        public async Task<Animal> DeleteAsync(int id)
+        {
+            var instance = await dbContext.Animals.FindAsync(id);
+            dbContext.Remove(instance);
+            await dbContext.SaveChangesAsync();
+            return instance;
         }
     }
 }

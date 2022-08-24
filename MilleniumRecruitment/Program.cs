@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MilleniumRecruitment;
+using MilleniumRecruitment.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ZooDbContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<AnimalsRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
