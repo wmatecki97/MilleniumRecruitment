@@ -8,6 +8,7 @@ namespace MilleniumRecruitment.Animals
         public int Id { get; internal set; }
         
         [Required]
+        [MinLength(2)]
         public string Name { get; set; }
     }
 }

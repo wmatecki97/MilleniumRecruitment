@@ -50,6 +50,7 @@ namespace MilleniumRecruitment.Repositories
 
         public async Task<Animal> DeleteAsync(int id)
         {
+            //todo check
             var instance = await dbContext.Animals.FindAsync(id);
             dbContext.Remove(instance);
             await dbContext.SaveChangesAsync();

@@ -20,7 +20,13 @@ namespace MilleniumRecruitment.Controllers
         [HttpGet("{id}.{format}"), FormatFilter]
         public async Task<ActionResult<Animal>> GetAsync(int id)
         {
-            return Ok(await repository.GetAsync(id));
+            var result = await repository.GetAsync(id);
+            if(result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
         [HttpGet("{format}"), FormatFilter]
