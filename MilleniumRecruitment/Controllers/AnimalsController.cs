@@ -16,7 +16,7 @@ namespace MilleniumRecruitment.Controllers
         public AnimalController(ILogger<AnimalController> logger, ZooDbContext dbContext)
         {
             _logger = logger;
-            this.repository = repository;
+            this.repository = new AnimalsRepository(dbContext);
         }
 
 

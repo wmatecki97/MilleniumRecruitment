@@ -9,7 +9,7 @@ namespace MilleniumRecruitment.Repositories
 
         public AnimalsRepository(ZooDbContext dbContext)
         {
-            dbContext = dbContext;
+            this.dbContext = dbContext;
         }
 
         public Animal[] GetAll()
