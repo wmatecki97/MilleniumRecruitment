@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MilleniumRecruitment.Animals;
 using MilleniumRecruitment.Repositories;
+using MilleniumRecruitment.Repositories.Interfaces;
 
 namespace MilleniumRecruitment.Controllers
 {
@@ -11,12 +12,12 @@ namespace MilleniumRecruitment.Controllers
     {
 
         private readonly ILogger<AnimalController> _logger;
-        private readonly AnimalsRepository repository;
+        private readonly IAnimalRepository repository;
 
-        public AnimalController(ILogger<AnimalController> logger, ZooDbContext dbContext)
+        public AnimalController(ILogger<AnimalController> logger, IAnimalRepository repository)
         {
             _logger = logger;
-            this.repository = new AnimalsRepository(dbContext);
+            this.repository = repository;
         }
 
 
@@ -35,6 +36,11 @@ namespace MilleniumRecruitment.Controllers
         [HttpPost()]
         public async Task<ActionResult<Animal>> PostAsync([FromBody] Animal animal)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             return await repository.AddAsync(animal);
         }
 

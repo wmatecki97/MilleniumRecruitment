@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MilleniumRecruitment.Animals;
+using MilleniumRecruitment.Repositories.Interfaces;
 
 namespace MilleniumRecruitment.Repositories
 {
-    public class AnimalsRepository
+    public class AnimalRepository : IAnimalRepository
     {
         private readonly ZooDbContext dbContext;
 
-        public AnimalsRepository(ZooDbContext dbContext)
+        public AnimalRepository(ZooDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
