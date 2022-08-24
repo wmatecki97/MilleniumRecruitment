@@ -30,6 +30,15 @@ namespace MilleniumRecruitment.Repositories
             return animal;
         }
 
+        public async Task<Animal> UpdateAsync(Animal animal)
+        {
+            dbContext.Animals.Attach(animal);
+            dbContext.Entry(animal).Property(a => a.Name).IsModified = true;
+            
+            await dbContext.SaveChangesAsync();
+            return animal;
+        }
+
         public async Task<Animal> DeleteAsync(int id)
         {
             var instance = await dbContext.Animals.FindAsync(id);

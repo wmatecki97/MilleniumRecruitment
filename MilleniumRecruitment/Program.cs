@@ -14,9 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ZooDbContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
-
 
 var app = builder.Build();
 

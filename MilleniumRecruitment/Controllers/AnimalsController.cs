@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MilleniumRecruitment.Animals;
-using MilleniumRecruitment.Repositories;
 using MilleniumRecruitment.Repositories.Interfaces;
 
 namespace MilleniumRecruitment.Controllers
@@ -42,6 +40,17 @@ namespace MilleniumRecruitment.Controllers
             }
 
             return await repository.AddAsync(animal);
+        }
+
+        [HttpPut("{format}"), FormatFilter]
+        public async Task<ActionResult<Animal>> PutAsync([FromBody] Animal animal)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return await repository.UpdateAsync(animal);
         }
 
         [HttpDelete("{id}.{format}"), FormatFilter]
