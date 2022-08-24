@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MilleniumRecruitment.Animals;
+using MilleniumRecruitment.Dtos;
 using MilleniumRecruitment.Repositories.Interfaces;
 
 namespace MilleniumRecruitment.Controllers
@@ -43,14 +44,21 @@ namespace MilleniumRecruitment.Controllers
         }
 
         [HttpPut("{format}"), FormatFilter]
-        public async Task<ActionResult<Animal>> PutAsync([FromBody] Animal animal)
+        public async Task<ActionResult<Animal>> PutAsync([FromBody] UpdateAnimalDto animal)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            return await repository.UpdateAsync(animal);
+            //todo automapper
+            var animalToUpdate = new Animal
+            {
+                Id = animal.Id,
+                Name = animal.Name
+            };
+
+            return await repository.UpdateAsync(animalToUpdate);
         }
 
         [HttpDelete("{id}.{format}"), FormatFilter]
